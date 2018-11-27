@@ -13,7 +13,7 @@ class Dessert:
     def __repr__(self):
         """Nice formatting of dessert objects in Python shell"""
 
-        return f"<Dessert id={self.id} name=\"{self.name}\" calories={self.calories}>"
+        return f"<Dessert, id={self.id}, name=\"{self.name}\", calories={self.calories}>"
 
     def serialize(self):
         """Convert dessert data to a dictionary to play nice with JSON"""
@@ -36,7 +36,12 @@ class DessertList:
     def __repr__(self):
         """Nice formatting of dessert list objects in Python shell"""
 
-        pass
+        string = ""
+
+        for dessert in self.desserts:
+            string = string + repr(dessert) + '\n'
+
+        return string
 
     def add(self, name, description, calories):
         """Add a new dessert given dessert data and append to our list"""
@@ -49,7 +54,11 @@ class DessertList:
         """Convert dessert list data to a list of dictionaries,
         which will play nice with JSON"""
 
-        pass
+        json_dict = []
+        for dessert in self.desserts:
+            json_dict.append(dessert.serialize())
+
+        return json_dict
 
 
 # make a dessert list and put some desserts in it
