@@ -44,3 +44,62 @@ class FlaskTests(TestCase):
             # e.g. 'JSON data of all desserts' should be in the response data,
             # 'Adds a new dessert to our list' should be in the response data,
             # etc.
+
+    def test_display_desserts(self):
+        """Make sure /desserts returns json with all desserts"""
+
+        with self.client:
+            response = self.client.get('/desserts')
+            self.assertEqual(response.status_code, 200)
+
+            json_response = [{
+                'id':
+                1,
+                'name':
+                'Chocolate chip cookie',
+                'description':
+                "C is for cookie, that's good enough for me",
+                'calories':
+                200
+            },
+                             {
+                                 'id':
+                                 2,
+                                 'name':
+                                 'Banana split',
+                                 'description':
+                                 "I'm going to eat all of my feelings",
+                                 'calories':
+                                 600
+                             },
+                             {
+                                 'id': 3,
+                                 'name': 'Glazed Donut',
+                                 'description': 'Perfect with a cup of coffee',
+                                 'calories': 300
+                             }]
+
+            self.assertEqual(response.json, json_response)
+
+    def test_add_dessert(self):
+        """Test that add dessert method appends dessert to dessert list"""
+
+        with self.client:
+            response = self.client.post(
+                "/desserts",
+                json={
+                    "name": "Junior Mint",
+                    "description": "Let's all go to the movies",
+                    "calories": 798174124
+                })
+
+            self.assertEqual(response.status_code, 200)
+
+            json_response = {
+                "name": "Junior Mint",
+                "description": "Let's all go to the movies",
+                "calories": 798174124,
+                "id": 4
+            }
+            # response.json is the same as input
+            self.assertEqual(response.json, json_response)

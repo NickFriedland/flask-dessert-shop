@@ -39,7 +39,7 @@ class DessertList:
         string = ""
 
         for dessert in self.desserts:
-            string = string + repr(dessert) + '\n'
+            string += repr(dessert) + '\n'
 
         return string
 
